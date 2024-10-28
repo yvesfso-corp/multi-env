@@ -27,6 +27,8 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
     # Runs a single command using the runners shell
     - uses: ./.github/workflows/cd.yml
       with:
