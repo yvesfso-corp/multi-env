@@ -29,6 +29,7 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+    - run: ls -la
     # Runs a single command using the runners shell
     - uses: ./.github/workflows/cd.yml
       with:

@@ -10,7 +10,7 @@ name: 'Azure CD Workflow'
 #   packages: read
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       runs-on:
         required: false
