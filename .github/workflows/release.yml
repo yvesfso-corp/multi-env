@@ -22,6 +22,11 @@ on:
 jobs:
   # This workflow contains a single job called "greet"
   call-cd:  
+    strategy:
+      matrix:
+        environment: ['dev', 'hom', 'prod']
+      fail-fast: true
+      max-parallel: 1
     uses: ./.github/workflows/cd.yml
     with:
       runs-on: ubuntu-latest
