@@ -1,0 +1,60 @@
+name: 'Azure CD Workflow'
+
+permissions:
+  id-token: write
+  contents: write
+  issues: write
+  pull-requests: write
+  checks: write
+  actions: write
+  packages: read
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        required: false
+        type: string
+        default: ubuntu-latest
+      iupipes-config-path:
+        required: false
+        type: string
+        default: '.iupipes.yml'
+      infra-working-directory:
+        required: false
+        type: string
+        default: 'infra'
+      infra-terraform-version:
+        required: false
+        type: string
+        default: '1.1.9'
+      infra-terragrunt-version:
+        required: false
+        type: string
+        default: 'v0.45.16'
+      environment:
+        required: true
+        type: string
+
+jobs:
+  # This workflow contains a single job called "greet"
+  greet:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Runs a single command using the runners shell
+    - name: Send greeting
+      uses: tj-actions/verify-changed-files@v20
+      id: verify-changed-files
+      with:
+        files: |
+           *.hcl
+
+    - name: Run step only when any of the above files change.
+      if: steps.verify-changed-files.outputs.files_changed == 'true'
+      env:
+        CHANGED_FILES: ${{ steps.verify-changed-files.outputs.changed_files }}
+      run: |
+        echo "Changed files: $CHANGED_FILES"
