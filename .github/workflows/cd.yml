@@ -46,6 +46,9 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
     # Runs a single command using the runners shell
     - name: Verify changed files
       uses: tj-actions/verify-changed-files@v20
