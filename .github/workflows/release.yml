@@ -29,9 +29,9 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - run: ls -la
+    - run: ls -lR
     # Runs a single command using the runners shell
-    - uses: ./.github/workflows/cd.yml
+    - uses: .github/workflows/cd.yml
       with:
         runs-on: ubuntu-latest
         iupipes-config-path: '.iupipes.yml'
