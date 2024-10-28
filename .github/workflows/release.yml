@@ -25,6 +25,12 @@ jobs:
     strategy:
       matrix:
         environment: ['dev', 'hom', 'prod']
+        include:
+          - environment: 'dev'            
+          - environment: 'hom'
+            depends-on: dev
+          - environment: 'prod'
+            depends-on: hom
       fail-fast: true
       max-parallel: 1
     uses: ./.github/workflows/cd.yml
@@ -34,4 +40,5 @@ jobs:
       infra-working-directory: 'infra'
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
-      environment: matrix.environment
+      environment: ${{ matrix.environment }}
+      dependencies: ${{ matrix.depends-on }}

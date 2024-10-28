@@ -35,32 +35,50 @@ on:
       environment:
         required: true
         type: string
+      dependencies:
+        required: false
+        type: string
 
 jobs:
   # This workflow contains a single job called "greet"
-  cd:
+  check-changed-files:
+    needs: [ ${{ inputs.dependencies }} ]
+    outputs:
+      changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
+
+    environment: 
+      name: ${{ inputs.environment }}
+    # The type of runner that the job will run on
+    runs-on: ${{ inputs.runs-on }}
+      
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+  
+      # Runs a single command using the runners shell
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
+        # with:
+        #   since_last_remote_commit: true 
+
+  ${{ inputs.environment }}:
+    needs: check-changed-files
     environment: 
       name: ${{ inputs.environment }}
     # The type of runner that the job will run on
     runs-on: ${{ inputs.runs-on }}
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: List all changed files
+        env:
+          ALL_CHANGED_FILES: ${{ needs.check-changed-files.outputs.changed-files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
 
-    # Runs a single command using the runners shell
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v45
-      # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
-      # with:
-      #   since_last_remote_commit: true 
 
-    - name: List all changed files
-      env:
-        ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
-      run: |
-        for file in ${ALL_CHANGED_FILES}; do
-          echo "$file was changed"
-        done
+    
