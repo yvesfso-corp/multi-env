@@ -34,4 +34,4 @@ jobs:
       infra-working-directory: 'infra'
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
-      environment: 'dev'
+      environment: matrix.environment
