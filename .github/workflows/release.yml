@@ -31,7 +31,8 @@ jobs:
       uses: actions/checkout@v4
     - run: ls -lR
     # Runs a single command using the runners shell
-    - uses: .github/workflows/cd.yml
+    - name: Call CD workflow  
+      uses: ./.github/workflows/cd.yml
       with:
         runs-on: ubuntu-latest
         iupipes-config-path: '.iupipes.yml'
