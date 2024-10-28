@@ -38,14 +38,16 @@ on:
 
 jobs:
   # This workflow contains a single job called "greet"
-  greet:
+  cd:
+    environment: 
+      name: ${{ inputs.environment }}
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
+    - name: Verify changed files
       uses: tj-actions/verify-changed-files@v20
       id: verify-changed-files
       with:
