@@ -26,7 +26,7 @@ jobs:
     with:
       runs-on: ubuntu-latest
       iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: 'infra'
+      infra-working-directory: '/dev/'
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
       environment: 'dev'
@@ -37,7 +37,7 @@ jobs:
     with:
       runs-on: ubuntu-latest
       iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: 'infra'
+      infra-working-directory: '/hom/'
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
       environment: 'hom'
@@ -48,7 +48,7 @@ jobs:
     with:
       runs-on: ubuntu-latest
       iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: 'infra'
+      infra-working-directory: '/prod/'
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
       environment: 'prod'
