@@ -58,6 +58,12 @@ jobs:
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
         #   since_last_remote_commit: true 
+      
+      - name: Set outputs
+        id: set-outputs
+        run: |
+          echo "::set-output name=all_changed_files::${{ steps.changed-files.outputs.all_changed_files }}"
+          echo "::set-output name=any_changed::${{ steps.changed-files.outputs.any_changed }}"
 
   cd:
     needs: check-changed-files
