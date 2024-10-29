@@ -35,15 +35,13 @@ on:
       environment:
         required: true
         type: string
-      dependency:
-        required: false
-        type: string
 
 jobs:
   # This workflow contains a single job called "greet"
   check-changed-files:
     outputs:
       changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
+      any_changed: ${{ steps.changed-files.outputs.any_changed }}
 
     # The type of runner that the job will run on
     runs-on: ${{ inputs.runs-on }}
@@ -62,7 +60,7 @@ jobs:
         #   since_last_remote_commit: true 
 
   cd:
-    needs: [ check-changed-files, ${{ inputs.dependency }} ]      
+    needs: check-changed-files
     environment: 
       name: ${{ inputs.environment }}
     # The type of runner that the job will run on
@@ -70,6 +68,7 @@ jobs:
 
     steps:
       - name: List all changed files
+        if : ${{ needs.check-changed-files.outputs.any_changed == 'true' }}
         env:
           ALL_CHANGED_FILES: ${{ needs.check-changed-files.outputs.changed-files }}
         run: |
