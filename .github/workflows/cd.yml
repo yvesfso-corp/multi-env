@@ -61,14 +61,14 @@ jobs:
 
   cd:
     needs: check-changed-files
+    if : ${{ needs.check-changed-files.outputs.any_changed == 'true' }}
     environment: 
       name: ${{ inputs.environment }}
     # The type of runner that the job will run on
     runs-on: ${{ inputs.runs-on }}
 
     steps:
-      - name: List all changed files
-        if : ${{ needs.check-changed-files.outputs.any_changed == 'true' }}
+      - name: List all changed files        
         env:
           ALL_CHANGED_FILES: ${{ needs.check-changed-files.outputs.changed-files }}
         run: |
