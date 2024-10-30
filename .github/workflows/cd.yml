@@ -130,6 +130,7 @@ jobs:
         OWNER: ${{ github.repository_owner }}
         REPO: ${{ github.event.repository.name }}
         RUN_ID: ${{ github.run_id }}
+        GH_TOKEN: ${{ github.token }}
       with:
         timeout_minutes: 10
         max_attempts: 3
