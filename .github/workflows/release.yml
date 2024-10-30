@@ -23,40 +23,40 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  cd-dev:  
-    uses: ./.github/workflows/cd.yml
-    with:
-      runs-on: ubuntu-latest
-      iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: '/dev/'
-      infra-terraform-version: '1.1.9'
-      infra-terragrunt-version: 'v0.45.16'
-      environment: 'dev'
+  # cd-dev:  
+  #   uses: ./.github/workflows/cd.yml
+  #   with:
+  #     runs-on: ubuntu-latest
+  #     iupipes-config-path: '.iupipes.yml'
+  #     infra-working-directory: '/dev/'
+  #     infra-terraform-version: '1.1.9'
+  #     infra-terragrunt-version: 'v0.45.16'
+  #     environment: 'dev'
   
-  cd-hom:
-    needs: cd-dev  
-    uses: ./.github/workflows/cd.yml
-    with:
-      runs-on: ubuntu-latest
-      iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: '/hom/'
-      infra-terraform-version: '1.1.9'
-      infra-terragrunt-version: 'v0.45.16'
-      environment: 'hom'
+  # cd-hom:
+  #   needs: cd-dev  
+  #   uses: ./.github/workflows/cd.yml
+  #   with:
+  #     runs-on: ubuntu-latest
+  #     iupipes-config-path: '.iupipes.yml'
+  #     infra-working-directory: '/hom/'
+  #     infra-terraform-version: '1.1.9'
+  #     infra-terragrunt-version: 'v0.45.16'
+  #     environment: 'hom'
   
-  cd-prod:
-    needs: cd-hom
-    uses: ./.github/workflows/cd.yml
-    with:
-      runs-on: ubuntu-latest
-      iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: '/prod/'
-      infra-terraform-version: '1.1.9'
-      infra-terragrunt-version: 'v0.45.16'
-      environment: 'prod'
+  # cd-prod:
+  #   needs: cd-hom
+  #   uses: ./.github/workflows/cd.yml
+  #   with:
+  #     runs-on: ubuntu-latest
+  #     iupipes-config-path: '.iupipes.yml'
+  #     infra-working-directory: '/prod/'
+  #     infra-terraform-version: '1.1.9'
+  #     infra-terragrunt-version: 'v0.45.16'
+  #     environment: 'prod'
   
   merge-to-main:
-    needs: cd-prod
+    # needs: cd-prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
