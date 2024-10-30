@@ -54,3 +54,21 @@ jobs:
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
       environment: 'prod'
+  
+  merge-to-main:
+    needs: cd-prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Merge to main
+        uses: actions/github-script@v5
+        env:
+          PR_TITLE: "chore (automated): Merge release to main"
+        with:
+          # github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            gh pr create --base main --title "$PR_TITLE" --body "This is an automated PR to merge the release ${{ github.event.release.id }} into main"
+            gh pr merge --auto --squash "release"
+    
