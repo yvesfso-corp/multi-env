@@ -111,6 +111,8 @@ jobs:
     
     - name: Get pending deployments
       uses: actions/github-script@v7
+      env:
+        GH_TOKEN: ${{ github.token }}
       with:
         github-token: ${{ github.token }}
         script: |
