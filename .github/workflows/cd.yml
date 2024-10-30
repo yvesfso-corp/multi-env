@@ -92,8 +92,8 @@ jobs:
     if : ${{ needs.check-changed-files.outputs.any_changed == 'false' }}
     runs-on: ubuntu-latest
     steps:
-    - name: Sleep for 10 seconds
-      run: sleep 10s      
+    # - name: Sleep for 10 seconds
+    #   run: sleep 10s      
     
     - name: Get environment id
       uses: actions/github-script@v6
@@ -109,21 +109,47 @@ jobs:
           console.log("Env:", environmentId);
           return environmentId;
     
+    # - name: Approve workflow
+    #   uses: actions/github-script@v6
+    #   env:
+    #     GH_TOKEN: ${{ github.token }}
+    #   with:
+    #     github-token: ${{ github.token }}
+    #     script: |
+    #       await github.rest.actions.reviewPendingDeploymentsForRun({
+    #         owner: context.repo.owner,
+    #         repo: context.repo.repo,
+    #         run_id: context.runId,
+    #         environment_ids: [${{ steps.environment-id.outputs.result }}],
+    #         state: 'approved',
+    #         comment: 'Ship it!',
+    #       });
     - name: Approve workflow
-      uses: actions/github-script@v6
+      uses: nick-fields/retry@v2
       env:
-        GH_TOKEN: ${{ github.token }}
+        OWNER: ${{ github.repository_owner }}
+        REPO: ${{ github.event.repository.name }}
+        RUN_ID: ${{ github.run_id }}
       with:
-        github-token: ${{ github.token }}
-        script: |
-          await github.rest.actions.reviewPendingDeploymentsForRun({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            run_id: context.runId,
-            environment_ids: [${{ steps.environment-id.outputs.result }}],
-            state: 'approved',
-            comment: 'Ship it!',
-          });
+        timeout_minutes: 10
+        max_attempts: 3
+        command: |
+          gh api \
+          --method POST \
+          -H "Accept: application/vnd.github+json" \
+          -H "X-GitHub-Api-Version: 2022-11-28" \
+          /repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/runs/${{ github.run_id }}/pending_deployments \
+          -F "environment_ids[]=${{ steps.environment-id.outputs.result }}" -f "state=approved" -f "comment=Ship it!"
+
+      # GitHub CLI api
+  # https://cli.github.com/manual/gh_api
+
+  # gh api \
+  # --method POST \
+  # -H "Accept: application/vnd.github+json" \
+  # -H "X-GitHub-Api-Version: 2022-11-28" \
+  # /repos/OWNER/REPO/actions/runs/RUN_ID/pending_deployments \
+  #  -F "environment_ids[]=161171787" -f "state=approved" -f "comment=Ship it!"
 
 
-    
+      
