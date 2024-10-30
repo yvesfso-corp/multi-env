@@ -138,9 +138,7 @@ jobs:
     - name: Approve workflow
       uses: actions/github-script@v7
       with:
-        # github-token: ${{steps.get_workflow_token.outputs.token}}
-        github-token: ${{ secrets.GITHUB_ACTIONS }}
-        # github-token: ${{ github.token }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           await github.rest.actions.reviewPendingDeploymentsForRun({
             owner: context.repo.owner,
