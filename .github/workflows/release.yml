@@ -56,7 +56,7 @@ jobs:
       environment: 'prod'
   
   merge-to-main:
-    # needs: cd-prod
+    needs: cd-prod
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
