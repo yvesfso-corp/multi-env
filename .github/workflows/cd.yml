@@ -59,7 +59,8 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           path: .${{ inputs.infra-working-directory }}
-          sha: main
+          sha: 'origin/main'
+          base_sha: 'origin/main'          
           dir_names: true
           files: "**/*.hcl"
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
