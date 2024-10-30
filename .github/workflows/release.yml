@@ -45,7 +45,7 @@ jobs:
   #     environment: 'hom'
   
   cd-prod:
-    needs: cd-hom
+    # needs: cd-hom
     uses: ./.github/workflows/cd.yml
     with:
       runs-on: ubuntu-latest
