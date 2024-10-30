@@ -119,7 +119,7 @@ jobs:
             repo: context.repo.repo,
             run_id: ${{ github.run_id }}
           })
-          console.log(result.data[0].environment)
+          console.log(result.data[0])
     
     # - name: Approve workflow2
     #   uses: actions/github-script@v6
@@ -140,13 +140,12 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          sleep 5s
           await github.rest.actions.reviewPendingDeploymentsForRun({
             owner: context.repo.owner,
             repo: context.repo.repo,
             run_id: ${{ github.run_id }},
             environment_ids: [
-              ${{ steps.environment-id.outputs.result }}
+              '${{ steps.environment-id.outputs.result }}'
             ],
             state: 'approved',
             comment: 'Ship it!',
