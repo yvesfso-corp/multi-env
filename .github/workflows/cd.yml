@@ -108,22 +108,26 @@ jobs:
           const environmentId = environmentResponse.data.id;
           console.log("Env:", environmentId);
           return environmentId;
-
+    
     - name: Approve workflow
-      uses: actions/github-script@v6
+      uses: Wandalen/wretry.action@master
       env:
         GH_TOKEN: ${{ github.token }}
       with:
-        github-token: ${{ github.token }}
-        script: |
-          await github.rest.actions.reviewPendingDeploymentsForRun({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            run_id: context.runId,
-            environment_ids: [${{ steps.environment-id.outputs.result }}],
-            state: 'approved',
-            comment: 'Ship it!',
-          });
+        attempt_limit: 3
+        attempt_delay: 5000
+        action: actions/github-script@v6      
+        with: |
+          github-token: ${{ github.token }}
+          script: |
+            await github.rest.actions.reviewPendingDeploymentsForRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId,
+              environment_ids: [${{ steps.environment-id.outputs.result }}],
+              state: 'approved',
+              comment: 'Ship it!',
+            });
 
 
-    
+      
