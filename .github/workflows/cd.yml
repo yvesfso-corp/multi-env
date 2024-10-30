@@ -136,17 +136,26 @@ jobs:
     #       });
 
     - name: Approve workflow
-      uses: actions/github-script@v7
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          await github.rest.actions.reviewPendingDeploymentsForRun({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            run_id: ${{ github.run_id }},
-            environment_ids: [
-              '${{ steps.environment-id.outputs.result }}'
-            ],
-            state: 'approved',
-            comment: 'Ship it!',
-          })
+      run: |
+        gh api --verbose                                      \
+        repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/runs/${{ github.run_id }}/pending_deployments \
+        --method POST                                       \
+        -F "environment_ids[]=${{ steps.environment-id.outputs.result }}"                       \
+        -f "state=approved"                                 \
+        -f "comment=Auto-Approved by GitHub Actions" 
+
+    # - name: Approve workflow
+    #   uses: actions/github-script@v7
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     script: |
+    #       await github.rest.actions.reviewPendingDeploymentsForRun({
+    #         owner: context.repo.owner,
+    #         repo: context.repo.repo,
+    #         run_id: ${{ github.run_id }},
+    #         environment_ids: [
+    #           '${{ steps.environment-id.outputs.result }}'
+    #         ],
+    #         state: 'approved',
+    #         comment: 'Ship it!',
+    #       })
