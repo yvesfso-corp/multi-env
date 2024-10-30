@@ -50,6 +50,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       
       # Runs a single command using the runners shell
       - name: Get changed files
@@ -57,6 +58,7 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           path: .${{ inputs.infra-working-directory }}
+          base_sha: 'main'
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
         # with:
         #   since_last_remote_commit: true 
