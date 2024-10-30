@@ -145,7 +145,7 @@ jobs:
         gh api --verbose                                      \
         repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/actions/runs/${{ github.run_id }}/pending_deployments \
         --method POST                                       \
-        -H "Authorization: Bearer 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" \
+        -H "Authorization: Bearer ${{ github.token }}" \
         -F "environment_ids[]=${{ steps.environment-id.outputs.result }}"                       \
         -f "state=approved"                                 \
         -f "comment=Auto-Approved by GitHub Actions" 
