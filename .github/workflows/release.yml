@@ -44,16 +44,16 @@ jobs:
   #     infra-terragrunt-version: 'v0.45.16'
   #     environment: 'hom'
   
-  # cd-prod:
-  #   needs: cd-hom
-  #   uses: ./.github/workflows/cd.yml
-  #   with:
-  #     runs-on: ubuntu-latest
-  #     iupipes-config-path: '.iupipes.yml'
-  #     infra-working-directory: '/prod/'
-  #     infra-terraform-version: '1.1.9'
-  #     infra-terragrunt-version: 'v0.45.16'
-  #     environment: 'prod'
+  cd-prod:
+    needs: cd-hom
+    uses: ./.github/workflows/cd.yml
+    with:
+      runs-on: ubuntu-latest
+      iupipes-config-path: '.iupipes.yml'
+      infra-working-directory: '/prod/'
+      infra-terraform-version: '1.1.9'
+      infra-terragrunt-version: 'v0.45.16'
+      environment: 'prod'
   
   merge-to-main:
     # needs: cd-prod
