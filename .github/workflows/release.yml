@@ -23,29 +23,29 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
-  cd-dev:  
-    uses: ./.github/workflows/cd.yml
-    with:
-      runs-on: ubuntu-latest
-      iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: '/dev/'
-      infra-terraform-version: '1.1.9'
-      infra-terragrunt-version: 'v0.45.16'
-      environment: 'dev'
+  # cd-dev:  
+  #   uses: ./.github/workflows/cd.yml
+  #   with:
+  #     runs-on: ubuntu-latest
+  #     iupipes-config-path: '.iupipes.yml'
+  #     infra-working-directory: '/dev/'
+  #     infra-terraform-version: '1.1.9'
+  #     infra-terragrunt-version: 'v0.45.16'
+  #     environment: 'dev'
   
-  cd-hom:
-    needs: cd-dev  
-    uses: ./.github/workflows/cd.yml
-    with:
-      runs-on: ubuntu-latest
-      iupipes-config-path: '.iupipes.yml'
-      infra-working-directory: '/hom/'
-      infra-terraform-version: '1.1.9'
-      infra-terragrunt-version: 'v0.45.16'
-      environment: 'hom'
+  # cd-hom:
+  #   needs: cd-dev  
+  #   uses: ./.github/workflows/cd.yml
+  #   with:
+  #     runs-on: ubuntu-latest
+  #     iupipes-config-path: '.iupipes.yml'
+  #     infra-working-directory: '/hom/'
+  #     infra-terraform-version: '1.1.9'
+  #     infra-terragrunt-version: 'v0.45.16'
+  #     environment: 'hom'
   
   cd-prod:
-    needs: cd-hom
+    # needs: cd-hom
     uses: ./.github/workflows/cd.yml
     with:
       runs-on: ubuntu-latest
@@ -54,3 +54,19 @@ jobs:
       infra-terraform-version: '1.1.9'
       infra-terragrunt-version: 'v0.45.16'
       environment: 'prod'
+  
+  merge-to-main:
+    needs: cd-prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Merge to main
+        env:
+          PR_TITLE: "chore (automated): Merge release to main"
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create --base main --title "$PR_TITLE" --body "This is an automated PR to merge the release ${{ github.event.release.id }} into main"
+          gh pr merge --auto --squash "release"
+    
