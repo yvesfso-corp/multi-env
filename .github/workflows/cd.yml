@@ -119,7 +119,7 @@ jobs:
         OWNER: ${{ github.repository_owner }}
         REPO: ${{ github.event.repository.name }}
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        github-token: ${{ github.token }}
         script: |
           const result = await github.rest.actions.getPendingDeploymentsForRun({
             owner: context.repo.owner,
