@@ -1,14 +1,16 @@
 name: 'Azure CD Workflow'
 
-permissions:
-  id-token: write
-  contents: write
-  issues: write
-  pull-requests: write
-  checks: write
-  actions: write
-  packages: read
-  deployments: write
+# permissions: 
+#   id-token: write
+#   contents: write
+#   issues: write
+#   pull-requests: write
+#   checks: write
+#   actions: write
+#   packages: read
+#   deployments: write
+
+permissions: write-all
 
 on:
   workflow_call:
