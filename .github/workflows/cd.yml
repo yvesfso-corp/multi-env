@@ -38,6 +38,11 @@ on:
       environment:
         required: true
         type: string
+        
+    secrets:
+      GH_ADMIN:
+        required: true
+
 
 jobs:
   # This workflow contains a single job called "greet"
