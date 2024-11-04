@@ -10,7 +10,7 @@ name: 'Azure CD Workflow'
 #   packages: read
 #   deployments: write
 
-permissions: write-all
+permissions: read-all
 
 on:
   workflow_call:
