@@ -88,7 +88,9 @@ jobs:
             echo "$file was changed"
           done
     
-  approve-workflow:
+  check-pending-workflows:
+    outputs:
+        environment_id: ${{ steps.environment-id.outputs.result }}
     needs: check-changed-files
     if : ${{ needs.check-changed-files.outputs.any_changed == 'false' }}
     runs-on: ubuntu-latest
@@ -114,6 +116,8 @@ jobs:
       uses: actions/github-script@v7
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OWNER: ${{ github.repository_owner }}
+        REPO: ${{ github.event.repository.name }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -123,13 +127,18 @@ jobs:
             run_id: ${{ github.run_id }}
           })
           console.log(result.data[0])
-    
+
+  approve-pending-workflows:
+    needs: check-pending-workflows
+    if : ${{ needs.check-changed-files.outputs.any_changed == 'false' }}
+    runs-on: ubuntu-latest
+    steps:
     - name: Approve workflow2
       uses: actions/github-script@v6
-      env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OWNER: ${{ github.repository_owner }}
-          REPO: ${{ github.event.repository.name }}
+      env:      
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        OWNER: ${{ github.repository_owner }}
+        REPO: ${{ github.event.repository.name }}
       with:
         github-token: ${{ github.token }}
         script: |
@@ -137,7 +146,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             run_id: context.runId,
-            environment_ids: [${{ steps.environment-id.outputs.result }}],
+            environment_ids: [${{ needs.check-pending-workflows.outputs.environment_id }}],
             state: 'approved',
             comment: 'Ship it!',
           });
