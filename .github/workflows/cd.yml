@@ -72,7 +72,7 @@ jobs:
           fetch_depth: "100"
           path: "."
           # path: ".${{ inputs.infra-working-directory }}"
-          sha: "${{ github.ref_name }}"
+          # sha: "${{ github.ref_name }}"
           base_sha: "main"
           since_last_remote_commit: "true"
           # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
