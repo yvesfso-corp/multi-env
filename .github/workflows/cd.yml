@@ -62,7 +62,7 @@ jobs:
       - name: fetching commits
         id: fetch-commits
         run: |
-          git fetch --depth 1000 origin +refs/heads/main:refs/remotes/origin/main
+          git fetch --depth 1000 origin ${{ github.head_ref }}
 
       # Runs a single command using the runners shell
       - name: Get changed files
