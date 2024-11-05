@@ -62,6 +62,8 @@ jobs:
       - name: Get branch name
         id: branch-name
         uses: tj-actions/branch-names@v5
+        with:
+          base_ref_branch: 'main'          
       
       - uses: nrwl/nx-set-shas@v3
         id: last_successful_commit_pull_request
@@ -76,8 +78,8 @@ jobs:
         with:
           path: .${{ inputs.infra-working-directory }}
           # sha: 'main'
-          # base_sha: 'main'          
-          base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
+          base_sha: 'origin/main'          
+          # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
           dir_names: true
           files: "**/*.hcl"
         # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
