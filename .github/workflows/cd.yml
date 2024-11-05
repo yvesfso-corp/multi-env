@@ -71,9 +71,9 @@ jobs:
         with:
           fetch_depth: "100"
           path: ".${{ inputs.infra-working-directory }}"
-          # sha: "${{ github.ref_name }}"
+          sha: "${{ github.ref_name }}"
           base_sha: "${{ github.head_ref }}"
-          since_last_remote_commit: "true"
+          # since_last_remote_commit: "true"
           # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
           dir_names: true
           files: "**/*.hcl"
