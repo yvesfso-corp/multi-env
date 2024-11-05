@@ -59,10 +59,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       
-      - name: fetching commits
-        id: fetch-commits
-        run: |
-          git fetch --depth 1000 origin ${{ github.head_ref }}
+      # - name: fetching commits
+      #   id: fetch-commits
+      #   run: |
+      #     git fetch --depth 1000 origin ${{ github.head_ref }}
 
       # Runs a single command using the runners shell
       - name: Get changed files
