@@ -69,10 +69,11 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v45
         with:
-          fetch_depth: '100'
-          path: .${{ inputs.infra-working-directory }}
-          sha: 'main'
-          # base_sha: 'origin/main'          
+          fetch_depth: "100"
+          path: ".${{ inputs.infra-working-directory }}"
+          # sha: 'main'
+          base_sha: "${{ github.head_ref }}"
+          since_last_remote_commit: "true"
           # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
           dir_names: true
           files: "**/*.hcl"
