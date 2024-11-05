@@ -65,7 +65,7 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           path: .${{ inputs.infra-working-directory }}
-          sha: 'main'
+          sha: 'origin/main'
           # base_sha: 'main'          
           dir_names: true
           files: "**/*.hcl"
