@@ -69,6 +69,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v45
         with:
+          fetch_depth: '100'
           path: .${{ inputs.infra-working-directory }}
           sha: 'main'
           # base_sha: 'origin/main'          
