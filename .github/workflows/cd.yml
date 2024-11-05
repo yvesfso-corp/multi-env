@@ -70,8 +70,8 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           path: .${{ inputs.infra-working-directory }}
-          # sha: 'main'
-          base_sha: 'origin/main'          
+          sha: 'main'
+          # base_sha: 'origin/main'          
           # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
           dir_names: true
           files: "**/*.hcl"
