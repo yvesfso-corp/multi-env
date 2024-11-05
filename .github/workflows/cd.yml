@@ -70,7 +70,8 @@ jobs:
         uses: tj-actions/changed-files@v45
         with:
           fetch_depth: "100"
-          path: ".${{ inputs.infra-working-directory }}"
+          path: "."
+          # path: ".${{ inputs.infra-working-directory }}"
           sha: "${{ github.ref_name }}"
           base_sha: "main"
           since_last_remote_commit: "true"
