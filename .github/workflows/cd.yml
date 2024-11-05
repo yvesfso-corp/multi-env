@@ -67,7 +67,7 @@ jobs:
         id: last_successful_commit_pull_request
         with:
           main-branch-name: ${{ steps.branch-name.outputs.base_ref_branch }} # Get the last successful commit on the master or main branch
-          workflow_id: ''
+          workflow-id: ''
       
       # Runs a single command using the runners shell
       - name: Get changed files
