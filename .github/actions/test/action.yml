@@ -6,8 +6,12 @@ inputs:
     required: true
     default: 'World'
 outputs:
-    changed-files: ${{ steps.changed-files.outputs.all_changed_files }}
-    any_changed: ${{ steps.changed-files.outputs.any_changed }}
+    changed-files: 
+        description: 'Changed files'
+        value: ${{ steps.changed-files.outputs.all_changed_files }}      
+    any_changed: 
+        description: 'Any changed'
+        value: ${{ steps.changed-files.outputs.any_changed }}
 runs:
   using: "composite"
   steps: 
