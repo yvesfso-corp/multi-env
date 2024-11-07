@@ -15,25 +15,26 @@ outputs:
 runs:
   using: "composite"
   steps: 
-  - name: Get changed files
-    id: changed-files
-    uses: tj-actions/changed-files@v45
-    with:
-      # fetch_depth: "100"
-      path: "."
-      # path: ".${{ inputs.infra-working-directory }}"
-      # sha: "${{ github.ref_name }}"
-      base_sha: "main"
-      since_last_remote_commit: "true"
-      # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
-      dir_names: true
-      files: "*.hcl"
-    # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
-    # with:
-    #   since_last_remote_commit: true 
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v45
+      with:
+        # fetch_depth: "100"
+        path: "."
+        # path: ".${{ inputs.infra-working-directory }}"
+        # sha: "${{ github.ref_name }}"
+        base_sha: "main"
+        since_last_remote_commit: "true"
+        # base_sha: ${{ steps.last_successful_commit_pull_request.outputs.base }}
+        dir_names: true
+        files: "*.hcl"
+      # To compare changes between the current commit and the last pushed remote commit set `since_last_remote_commit: true`. e.g
+      # with:
+      #   since_last_remote_commit: true 
   
-  - name: Set outputs
-    id: set-outputs
-    run: |
-      echo "::set-output name=all_changed_files::${{ steps.changed-files.outputs.all_changed_files }}"
-      echo "::set-output name=any_changed::${{ steps.changed-files.outputs.any_changed }}"
+    - name: Set outputs
+      id: set-outputs
+      shell: bash
+      run: |
+        echo "::set-output name=all_changed_files::${{ steps.changed-files.outputs.all_changed_files }}"
+        echo "::set-output name=any_changed::${{ steps.changed-files.outputs.any_changed }}"
