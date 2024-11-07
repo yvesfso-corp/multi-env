@@ -58,10 +58,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Get changed files
         id: changed-files
-        uses: ./.github/actions/reusable.yml
+        uses: ./.github/actions/test
       
       # # - name: fetching commits
       # #   id: fetch-commits
