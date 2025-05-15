@@ -73,7 +73,7 @@ jobs:
 
   cd:
     needs: check-changed-files
-    if : ${{ needs.check-changed-files.outputs.any_changed == 'true' }}
+    # if : ${{ needs.check-changed-files.outputs.any_changed == 'true' }}
     
     environment: ${{ inputs.environment }}
     # The type of runner that the job will run on
